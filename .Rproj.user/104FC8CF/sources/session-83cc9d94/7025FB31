@@ -1,0 +1,27 @@
+{
+    "id": "7025FB31",
+    "path": "~/R_Sheets/sheet2.R",
+    "project_path": "sheet2.R",
+    "type": "r_source",
+    "hash": "0",
+    "contents": "",
+    "dirty": true,
+    "created": 1730648816653.0,
+    "source_on_save": false,
+    "relative_order": 1,
+    "properties": {
+        "tempName": "Untitled1",
+        "source_window_id": "",
+        "Source": "Source",
+        "cursorPosition": "68,0",
+        "scrollLine": "40"
+    },
+    "folds": "",
+    "lastKnownWriteTime": 1730656651,
+    "encoding": "UTF-8",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1730656652557,
+    "read_only": false,
+    "read_only_alternatives": []
+}

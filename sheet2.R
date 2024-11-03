@@ -1,0 +1,83 @@
+# Task 1: Tidy Data
+
+library(tibble)
+
+student1 <- tibble(
+  student = c("Adam","Bernd","Christian","Doris"),
+  algebra = c(NA, 5, 3, 4),
+  analysis = c(2, NA, 1,3),
+  diskrete.math = c(3,NA,2,4),
+)
+
+student2 <- tibble(
+  name = rep(c("Adam", "Bernd", "Christian", "Doris"), each = 2),
+  type = rep(c("height", "weight"), 4),
+  measure = c(1.83, 81, 1.75, 71, 1.69, 55, 1.57, 62))
+
+student3 <- tibble(
+  name = c("Adam", "Bernd", "Christian", "Doris"),
+  ratio = c("81/1.83", "71/1.75", "55/1.69", "62/1.57"))
+
+# Describe for every dataset what the dataset contains? What are
+# the variables and what are the observations?
+
+# Student1 contains a bunch of Students and their Grades for different exams
+# Student2 contains the same students but with their height and weight,
+# Student3 contains the Ratio for their height and weight
+
+# Why are the datasets not tidy?
+# They could be grouped together. Student2 contains each Student twice to hold their weight and height
+# Student3s ratio could be stored with the others
+# We can give each Variable its own column, each obeservation its own row and each Value could have its own cell
+
+# Make a tidy_version of each Dataset
+tidy_student1 <- tibble(
+  student = rep(student1$student, each = 3),
+  subject = rep(c("algebra", "analysis", "diskrete.math"), times = length(student1$student)),
+  grade = c(student1$algebra, student1$analysis, student1$diskrete.math)
+)
+print(tidy_student1)
+
+tidy_student2 <- tibble(
+  student = unique(student2$name),
+  height = student2$measure[student2$type == "height"],
+  weight = student2$measure[student2$type == "weight"],
+)
+print(tidy_student2)
+
+weight <- as.numeric(sub("/.*", "", student3$ratio))
+height <- as.numeric(sub(".*/", "", student3$ratio))
+
+tidy_student3 <- tibble(
+  student = unique(student2$name),
+  ratio = weight / height
+)
+print(tidy_student3)
+
+
+# Task 2:
+# Calculate the value of sin(log(√5 + 3)) directly and using the %>%-operator.
+val <- sqrt(5+3) %>% log() %>% sin()
+
+# Define a vector v with values 0.5,1,1.5,...,5 and calculate the by 2
+# digits rounded sum of the logarithms of the squared values of v
+# with nested operations and using the % > %-operator
+v = seq(0.5, 5, by=0.5)
+results <- v**2 %>% sum() %>% log() %>% round(digits = 2)
+
+# Task 3:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
