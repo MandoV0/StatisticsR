@@ -139,3 +139,42 @@ exercise.results <- tibble(
 # groups. What are the difference between n() and count()?
 exercise.results %>% summarise( n())
 exercise.results %>% count()
+
+
+
+# Task 5:
+library(tidyverse)
+library(nycflights13)
+head(flights)
+
+# Find all flights with more then 2 hours arrival delay
+res.b <- flights %>% filter(arr_delay > 120)
+#My sol: subset(flights, arr_delay > 2)
+
+
+# Find all flights with more then 2 hours arrival delay and no departure delay.
+res.c <- flights %>% filter(arr_delay > 120 & dep_delay <= 0)
+
+# Find all flights from United(UA), American(AA) and Delta(DL) with no arrival delay
+res.d <- flights %>% filter((carrier == "UA" | carrier == "AA" | carrier == "DL") & arr_delay <= 0) # My Solution
+res.d <- flights %>% filter(carrier %in% c("UA", "AA", "DL") & arr_delay <= 0)
+
+# Find all flights from United, American and Delta in the month
+# May with more than 5 hours arrival delay sorted by carrier and
+# flight number
+
+# May 5, 5 hours = 5*60 = 300
+# My Solution: res.e <- flights %>% filter(carrier %in% c("UA", "AA", "DL") & arr_delay >= 300 & month == 5)
+res.e <- flights %>%
+  filter(carrier %in% c("UA", "AA", "DL") & arr_delay >= 300 & month == 5) %>%
+  select(carrier, flight) %>%
+  arrange(carrier, flight) %>%
+  unique() # To remove duplicates?
+
+# Exchange the values of departure time and arrvial time in minute after midnight.
+# Example: departure time 722 given by HMinutes is in minutes after midnight 442!
+# Clock 
+flights.new <- flights %>% mutate(dep_time = arr_time, arr_time = dep_time)
+
+
+
