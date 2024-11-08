@@ -66,18 +66,76 @@ v = seq(0.5, 5, by=0.5)
 results <- v**2 %>% sum() %>% log() %>% round(digits = 2)
 
 # Task 3:
+df <- tibble( id = 1:10,
+                    sex = sample( x=c( "f" , "m"), size=10, replace = TRUE),
+                    age = round( runif ( 10 , 20 , 35 ) ) ,
+                    score1 = round( runif ( 10 , 0 , 25 ) )
+)
+# Select all male students
+males <- df[df$sex=="m", ] # [Rows (), Columns()]
+print(males)
 
+#Add the data of a new student with id = 11, sex = “m”, age = 25 and score1 = 4.
+df <- df %>% add_row(id=11, sex="m", age=25, score1=4)
+df
 
+library(tidyverse)
+# Add two columns score2 and score3 with random integer numbers
+# between 0 and 25
+df <- df %>% mutate(score2=round(runif(11, 0, 25)))
+df <- df %>% mutate(score3=round(runif(11, 0, 25)))
 
+# Add a column containing sum of all scores
+df <- df %>% mutate(sum=df$score1 + df$score2 + df$score3)
 
+# Add a column which denote the grades according to the scheme#
+# grad =
+# 5 if score sum ≤ 37
+# 4 if 37 < score sum ≤ 45
+# 3 if 45 < score sum ≤ 55
+# 2 if 55 < score sum ≤ 65
+# 1 if score sum ≥ 65
+df <- df %>% mutate(grade=case_when(
+  sum <= 37 ~ 5,
+  sum <= 45 ~ 4,
+  sum <= 55 ~ 3,
+  sum <= 65 ~ 2,
+  TRUE ~ 1
+  ))
+df
 
+# Find the values of the variables id, sex and grade sorted by the
+# values of sex of all students who have passed.
 
+# Filter Grade <= 4, m -> f
+passed <- df[df$grade <= 4, ]
+sorted <- passed %>% arrange(desc(sex))
+sorted
 
+# Calculate the mean, minimum, maximum and median of the variable
+# sum of scores grouped by the variable sex.
+mean(df$sum[df$sex=="f"])
+mean(df$sum[df$sex=="m"])
+min(df$sum[df$sex=="f"])
+min(df$sum[df$sex=="m"])
+max(df$sum[df$sex=="f"])
+max(df$sum[df$sex=="m"])
 
+library(tidyverse)
 
+# Task 4:
+no <- 30
+exercise.results <- tibble(
+  stud.id = 1:no,
+  group = sample(x=c("A","B","C"), size=no, replace = TRUE),
+  ex1 = sample(x=1:10, size=no, replace = TRUE),
+  ex2= sample(x=1:10, size=no, replace = TRUE),
+  ex3 = sample(x=1:10, size=no, replace = TRUE),
+  ex4 = sample(x=1:10, size=no, replace = TRUE),
+  ex5 = sample(x=1:10, size=no, replace = TRUE)
+)
 
-
-
-
-
-
+# Apply n() and count() to get the number of students in the different
+# groups. What are the difference between n() and count()?
+exercise.results %>% summarise( n())
+exercise.results %>% count()
